@@ -9,29 +9,29 @@ const app = express();
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Ensure that the request comes from a trusted source
-    if (
-      !origin ||
-      [
-        "http://localhost:3000",
-        "https://fullstack-project-management.netlify.app",
-      ].includes(origin)
-    ) {
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "https://fullstack-project-management.netlify.app",
+    ];
+
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error("CORS not allowed"), false);
+      callback(new Error("CORS not allowed"));
     }
   },
-  credentials: true, // Allow cookies and credentials with the request
-  methods: ["GET", "POST", "PUT", "DELETE"], // Allow only specific HTTP methods
-  allowedHeaders: ["Content-Type", "Authorization"], // Allow the specified headers
+  credentials: true,
 };
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+// app.options("*", cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions));
 
 // Routes
 app.use("/project-management/v1/todos", todoRoutes);
