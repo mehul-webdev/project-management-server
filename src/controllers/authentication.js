@@ -81,10 +81,13 @@ const handleSignIn = async (req, res) => {
 
     const jwtToken = handleCreateJWTToken(user);
 
+    console.log("here working secure", process.env.NODE_ENV === "production");
+
     res.cookie("access_token", jwtToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
