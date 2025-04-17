@@ -81,8 +81,6 @@ const handleSignIn = async (req, res) => {
 
     const jwtToken = handleCreateJWTToken(user);
 
-    console.log("here working secure", process.env.NODE_ENV === "production");
-
     res.cookie("access_token", jwtToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -103,10 +101,16 @@ const handleSignIn = async (req, res) => {
 };
 
 const handleUserLogout = (req, res) => {
-  res.clearCookie("access_token").json({
-    success: true,
-    message: "Logout",
-  });
+  res
+    .clearCookie("access_token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+    })
+    .json({
+      success: true,
+      message: "Logout",
+    });
 };
 
 const handleLoginStatus = async (req, res) => {
