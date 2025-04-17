@@ -11,6 +11,7 @@ const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
       "http://localhost:3000",
+      "http://localhost:5173",
       "https://fullstack-project-management.netlify.app",
     ];
 
@@ -22,6 +23,11 @@ const corsOptions = {
   },
   credentials: true,
 };
+
+app.use((req, res, next) => {
+  console.log("Incoming Origin:", req.headers.origin);
+  next();
+});
 
 // Apply CORS middleware
 app.use(cors(corsOptions));
