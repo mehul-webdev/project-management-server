@@ -84,6 +84,7 @@ const handleSignIn = async (req, res) => {
     res.cookie("access_token", jwtToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
     });
 
     res.status(200).json({
