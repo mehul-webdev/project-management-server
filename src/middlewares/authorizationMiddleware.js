@@ -4,8 +4,6 @@ const validateToken = (req, res, next) => {
   try {
     const token = req.cookies?.access_token;
 
-    console.log("the token is", token);
-
     if (!token) {
       return res
         .status(401)
