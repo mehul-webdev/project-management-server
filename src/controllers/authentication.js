@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { User } = require("../schemas/usersSchema");
+const User = require("../schemas/usersSchema");
 
 async function handlePasswordHashing(password) {
   const salt = await bcrypt.genSalt(10);
