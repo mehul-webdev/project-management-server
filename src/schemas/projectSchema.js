@@ -1,40 +1,44 @@
-const express = require("express");
 const mongoose = require("mongoose");
 
 const projectSchema = new mongoose.Schema(
   {
     projectName: {
       type: String,
-      require: true,
+      required: true,
     },
-    projectMembers: {
-      type: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User",
-        },
-      ],
-    },
+    projectMembers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     projectDescription: {
       type: String,
-      require: true,
+      required: true,
     },
-    projectTasks: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Tasks",
-    },
+    projectTasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Tasks",
+      },
+    ],
     projectStartDate: {
       type: Date,
-      require: true,
+      required: true,
     },
     projectEndDate: {
       type: Date,
-      require: true,
+      required: true,
     },
     projectStatus: {
       type: String,
-      enum: ["inprogress", "not started", "completed"],
-      default: "inprogress",
+      enum: ["inprogress", "notStarted", "completed"],
+      default: "notStarted",
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
   },
   { timestamps: true }

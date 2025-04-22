@@ -3,6 +3,9 @@ const cors = require("cors");
 const todoRoutes = require("./routes/todo.routes");
 const authenticationRoutes = require("./routes/authentication.routes");
 const userRoutes = require("./routes/users.routes");
+const projectRoutes = require("./routes/project.routes");
+const taskRoutes = require("./routes/task.routes");
+
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middlewares/errorHandler");
 const { validateToken } = require("./middlewares/authorizationMiddleware");
@@ -45,6 +48,8 @@ app.use(cookieParser());
 app.use("/project-management/v1/todos", todoRoutes);
 app.use("/project-management/v1/authentication", authenticationRoutes);
 app.use("/project-management/v1/users", validateToken, userRoutes);
+app.use("/project-management/v1/project", validateToken, projectRoutes);
+app.use("/project-management/v1/task", validateToken, taskRoutes);
 
 // Centralized error handler (must be after all routes and middleware)
 app.use(errorHandler);

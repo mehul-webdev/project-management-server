@@ -100,17 +100,23 @@ const handleSignIn = async (req, res) => {
   }
 };
 
-const handleUserLogout = (req, res) => {
-  res
-    .clearCookie("access_token", {
+const handleUserLogout = (req, res, next) => {
+  try {
+    // Clear the access token cookie
+    res.clearCookie("access_token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-    })
-    .json({
-      success: true,
-      message: "Logout",
     });
+
+    return res.json({
+      success: true,
+      message: "Logout Successful",
+    });
+  } catch (err) {
+    err.message = "Logout Failed";
+    next(err);
+  }
 };
 
 const handleLoginStatus = async (req, res) => {
