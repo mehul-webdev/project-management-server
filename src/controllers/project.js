@@ -57,6 +57,30 @@ const getProject = async (req, res, next) => {
   }
 };
 
+const handleAddmembers = async (req, res, next) => {
+  try {
+    const { id, data } = req?.body;
+
+    const project = await ProjectModel.findById(id);
+
+    const updatedMembers = [...project.projectMembers, ...data];
+
+    await ProjectModel.findByIdAndUpdate(
+      id,
+      { projectMembers: updatedMembers },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      message: "Members Added Successfully",
+    });
+  } catch (err) {
+    res.status(500);
+    next(err);
+  }
+};
+
 const updateProject = async () => {};
 const deleteProject = async () => {};
 const getAllProjects = async () => {};
@@ -68,4 +92,5 @@ module.exports = {
   deleteProject,
   getAllProjects,
   getProject,
+  handleAddmembers,
 };

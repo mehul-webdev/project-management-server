@@ -19,6 +19,25 @@ const getUsers = async (req, res, next) => {
   }
 };
 
+const checkUserExists = async (req, res, next) => {
+  try {
+    const { email } = req?.params;
+
+    const user = await User.findOne({ email });
+
+    res.status(200).json({
+      message: "success",
+      isExists: user ? true : false,
+      message: user ? "User Exists" : "User Not Registered",
+      id: user ? user._id : "",
+    });
+  } catch (err) {
+    res.status(500);
+    next(err);
+  }
+};
+
 module.exports = {
   getUsers,
+  checkUserExists,
 };

@@ -5,6 +5,7 @@ const {
   getAllProjects,
   getProject,
   getProjectNames,
+  handleAddmembers,
 } = require("../controllers/project");
 
 const router = require("express").Router();
@@ -16,5 +17,6 @@ router.delete("/delete-project/:id", deleteProject);
 router.get("/get-all-projects", getAllProjects);
 router.get("/get-project/:id", getProject);
 router.get("/get-project-names", getProjectNames);
+router.post("/add-members", handleAddmembers);
 
 module.exports = router;
